@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Created by fzy on 16/9/16.
  */
-public class LengthOfLongestSubstring {
+public class P3_LengthOfLongestSubstring {
     public int lengthOfLongestSubstring(String s) {
         HashMap<Character, Integer> charIndex = new HashMap<>();
         int length = s.length();
@@ -44,7 +44,7 @@ public class LengthOfLongestSubstring {
 
     public static void main(String[] args) {
         String s  = "abcabcbb";
-        LengthOfLongestSubstring l = new LengthOfLongestSubstring();
+        P3_LengthOfLongestSubstring l = new P3_LengthOfLongestSubstring();
         int count = l.lengthOfLongestSubstring(s);
         System.out.println(count);
     }

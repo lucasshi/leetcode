@@ -3,7 +3,7 @@ package com.tencent.lucasshi;
 /**
  * Created by fzy on 16/9/12.
  */
-public class AddTwoNumbers {
+public class P2_AddTwoNumbers {
     class ListNode {
         int val;
         ListNode next;

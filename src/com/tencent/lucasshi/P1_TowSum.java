@@ -1,12 +1,11 @@
 package com.tencent.lucasshi;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * Created by fzy on 16/9/11.
  */
-public class TowSum {
+public class P1_TowSum {
     class MyNumber implements Comparable<MyNumber> {
         public Integer num;
         public int index;
@@ -45,7 +44,7 @@ public class TowSum {
     }
 
     public static void main(String[] args) {
-        TowSum towSum = new TowSum();
+        P1_TowSum towSum = new P1_TowSum();
         int[] nums = {150, 24, 79, 50, 88, 345, 3};
         towSum.twoSum(nums, 200);
     }
