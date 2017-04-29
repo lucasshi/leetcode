@@ -5,12 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by fzy on 17/4/6.
+ * Created by fzy on 17/4/29.
  */
-public class P46_Permutations {
-    public List<List<Integer>> permute(int[] nums) {
+public class P47_Permutations {
+    public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        MyPermute(nums, 0, nums.length, result);
+        Arrays.sort(nums);
+        MyPermute(nums, 0, nums.length - 1, result);
         return result;
     }
 
@@ -24,7 +25,11 @@ public class P46_Permutations {
         }
 
         //
+        int pivot = nums[startIndex];
         for (int index = startIndex; index < endIndex; index++) {
+            if (nums[index] == pivot && index != startIndex) {
+                continue;
+            }
             int tmp = nums[index];
             nums[index] = nums[startIndex];
             nums[startIndex] = tmp;

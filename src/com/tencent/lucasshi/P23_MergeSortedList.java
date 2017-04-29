@@ -7,14 +7,7 @@ import java.util.PriorityQueue;
 /**
  * Created by fzy on 17/3/27.
  */
-class ListNode {
-    int val;
-    ListNode next;
 
-    ListNode(int x) {
-        val = x;
-    }
-}
 
 public class P23_MergeSortedList {
     public static ListNode mergeKLists(ListNode[] lists) {

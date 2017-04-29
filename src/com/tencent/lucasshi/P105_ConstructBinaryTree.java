@@ -4,16 +4,6 @@ package com.tencent.lucasshi;
  * Created by fzy on 17/4/6.
  */
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}
-
 public class P105_ConstructBinaryTree {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         if (preorder.length == 0  && inorder.length == 0) {
