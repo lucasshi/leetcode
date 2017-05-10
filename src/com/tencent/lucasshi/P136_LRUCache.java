@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 /**
  * Created by fzy on 17/5/6.
  */
-class LRUCache {
+class P136_LRUCache {
     class DoubleListNode {
         DoubleListNode prev;
         DoubleListNode next;
@@ -20,7 +20,7 @@ class LRUCache {
     private int capacity;
     private int size;
 
-    public LRUCache(int capacity) {
+    public P136_LRUCache(int capacity) {
         this.capacity = capacity;
         this.cache = new HashMap<Integer, DoubleListNode>();
         this.size = 0;
@@ -104,7 +104,7 @@ class LRUCache {
     }
 
     public static void main(String[] args) {
-        LRUCache lruCache = new LRUCache(3);
+        P136_LRUCache lruCache = new P136_LRUCache(3);
         lruCache.put(1, 1);
         lruCache.put(2, 2);
         lruCache.put(3, 3);
