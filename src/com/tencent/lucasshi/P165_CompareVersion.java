@@ -41,6 +41,6 @@ public class P165_CompareVersion {
 
     public static void main(String[] args) {
         P165_CompareVersion p = new P165_CompareVersion();
-        p.compareVersion("1.1", "1.1.0")
+        p.compareVersion("1.1", "1.1.0");
     }
 }

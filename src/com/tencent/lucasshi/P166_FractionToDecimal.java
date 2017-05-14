@@ -13,7 +13,7 @@ public class P166_FractionToDecimal {
         //
         String floatPart = "";
         HashMap<Integer, Integer> residualMap = new HashMap<>();
-        while (true) {
+        while (residual != 0) {
             int divided = residual * 10 / denominator;
             residualMap.put(residual, divided);
             floatPart += divided;
@@ -23,12 +23,15 @@ public class P166_FractionToDecimal {
             }
         }
 
-        System.out.println(floatPart);
-        return floatPart;
+        if (residual != 0) {
+            floatPart = "(" + floatPart + ")";
+        }
+        return intPart + "." + floatPart;
     }
 
     public static void main(String[] args) {
-        P166_FractionToDecimal
+        P166_FractionToDecimal p = new P166_FractionToDecimal();
+        System.out.print(p.fractionToDecimal(3, 5));
     }
 
 }
