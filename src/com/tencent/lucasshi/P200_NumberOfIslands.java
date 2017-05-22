@@ -19,6 +19,9 @@ public class P200_NumberOfIslands {
 
     public int numIslands(char[][] grid) {
         int height = grid.length;
+        if (height == 0) {
+            return 0;
+        }
         int width = grid[0].length;
 
         boolean[][] visited = new boolean[height][width];
@@ -62,7 +65,7 @@ public class P200_NumberOfIslands {
                 visited[px + 1][py] = true;
             }
 
-            if (py + 1 < grid[0].length && grid[px][py + 1] == '1' && !visited[px + 1][py]) {
+            if (py + 1 < grid[0].length && grid[px][py + 1] == '1' && !visited[px][py + 1]) {
                 queue.offer(new Pair(px, py + 1));
                 visited[px][py + 1] = true;
             }
