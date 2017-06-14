@@ -3,16 +3,10 @@ package com.tencent.lucasshi;
 import java.util.*;
 
 /**
- * Created by fzy on 17/5/21.
+ * Created by fzy on 17/5/22.
  */
-public class P207_CourseSchedule {
-
-    class Edge {
-        int i;
-        int j;
-    }
-
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+public class P210_findOrder {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
         HashMap<Integer, Set<Integer>> fromMap = new HashMap<>();
         HashMap<Integer, Set<Integer>> toMap = new HashMap<>();
         for (int i = 0; i < prerequisites.length; i++) {
@@ -24,14 +18,14 @@ public class P207_CourseSchedule {
             }
             fromMap.get(start).add(end);
 
-            if (!toMap.containsKey(start)) {
+            if (!toMap.containsKey(end)) {
                 toMap.put(end, new HashSet<>());
             }
 
             toMap.get(end).add(start);
         }
 
-        HashSet<Integer> selectCourses = new HashSet<>();
+        List<Integer> selectCourses = new ArrayList<>();
         while (selectCourses.size() < numCourses) {
             boolean match = false;
             int matchCourseIndex = -1;
@@ -46,13 +40,17 @@ public class P207_CourseSchedule {
 
             // 没有找到
             if (!match) {
-                return false;
+                return null;
             }
 
             selectCourses.add(matchCourseIndex);
             // 清楚两个表
             Set<Integer> set = toMap.get(matchCourseIndex);
-            for (int val:set) {
+            if (set == null) {
+                continue;
+            }
+
+            for (int val : set) {
                 fromMap.get(val).remove(matchCourseIndex);
                 if (fromMap.get(val).size() == 0) {
                     fromMap.remove(val);
@@ -62,6 +60,11 @@ public class P207_CourseSchedule {
             toMap.remove(matchCourseIndex);
         }
 
-        return true;
+        int[] result = new int[numCourses];
+        for (int i = 0; i < selectCourses.size(); i++) {
+            result[i] = selectCourses.get(i);
+        }
+
+        return result;
     }
 }
