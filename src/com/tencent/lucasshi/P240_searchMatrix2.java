@@ -24,6 +24,7 @@ public class P240_searchMatrix2 {
         }
 
         return false;
+        // 可以从四个方向去搜索这个值
     }
 
     public boolean searchMatrixV2(int[][] matrix, int target) {
