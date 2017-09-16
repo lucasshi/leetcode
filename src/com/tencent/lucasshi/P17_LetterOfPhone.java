@@ -52,7 +52,6 @@ public class P17_LetterOfPhone {
                 String tmp = value.charAt(j) + s;
                 res.add(tmp);
             }
-            ;
         }
         return res;
     }
