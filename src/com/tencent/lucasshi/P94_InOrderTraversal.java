@@ -43,11 +43,76 @@ public class P94_InOrderTraversal {
                 System.out.println(p.val);
                 while (p.right == null) {
                     p = nodeStack.pop();
-                    System.out.println(p.val);
+                    System.out.print(p.val);
                 }
                 p = p.right;
                 nodeStack.push(p);
             }
         }
+    }
+
+
+    public void inOrderV3(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode p = root;
+        stack.push(root);
+
+        while (!stack.empty()) {
+            p = p.left;
+            if (p != null) {
+                stack.push(p);
+                continue;
+            }
+
+            while (!stack.empty()) {
+                p = stack.pop();
+                System.out.print(p.val + " ");
+                if (p.right != null) {
+                    p = p.right;
+                    stack.push(p);
+                    break;
+                }
+            }
+        }
+        System.out.println();
+
+    }
+
+    public void PreOrder(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode p = root;
+        stack.push(root);
+
+        while (!stack.empty()) {
+            System.out.print(p.val + " ");
+            p = p.left;
+            if (p != null) {
+                stack.push(p);
+                continue;
+            }
+
+            while(!stack.empty()) {
+                p = stack.pop();
+                if (p.right != null) {
+                    p = p.right;
+                    stack.push(p);
+                    break;
+                }
+            }
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(4);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(1);
+
+        P94_InOrderTraversal p = new P94_InOrderTraversal();
+        p.inOrderV3(root);
+        p.PreOrder(root);
     }
 }
