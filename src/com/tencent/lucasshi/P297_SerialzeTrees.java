@@ -45,7 +45,6 @@ public class P297_SerialzeTrees {
             queue = childQueue;
         }
 
-        System.out.println(String.join(",", nodesString));
         return String.join(",", nodesString);
     }
 
