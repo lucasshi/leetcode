@@ -7,7 +7,8 @@ import java.util.Stack;
 /**
  * Created by fzy on 17/4/29.
  */
-public class P94_InOrderTraversal {
+public class
+P94_InOrderTraversal {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> values = new ArrayList<>();
         inorder(root, values);
@@ -78,6 +79,56 @@ public class P94_InOrderTraversal {
 
     }
 
+
+    public void inorder(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        TreeNode p = root;
+
+        while (!stack.empty()) {
+            if (p.left != null) {
+                p = p.left;
+                stack.push(p);
+            }
+
+            while (!stack.empty()) {
+                p = stack.pop();
+                System.out.println(p);
+                if (p.right != null) {
+                    p = p.right;
+                    stack.push(p);
+                    break;
+                }
+            }
+        }
+    }
+
+    public Stack<TreeNode> st;
+    public TreeNode p;
+
+    public void next() {
+        p = st.pop();
+        System.out.println(p.val);
+    }
+
+    public boolean hasNext() {
+        if (st.empty() && p.right == null)
+            return false;
+
+        if (p.right != null) {
+            p = p.right;
+            st.push(p);
+        }
+
+        while (p.left != null) {
+            p = p.left;
+            st.push(p);
+        }
+
+        return true;
+    }
+
+
     public void PreOrder(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode p = root;
@@ -91,7 +142,7 @@ public class P94_InOrderTraversal {
                 continue;
             }
 
-            while(!stack.empty()) {
+            while (!stack.empty()) {
                 p = stack.pop();
                 if (p.right != null) {
                     p = p.right;
