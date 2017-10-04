@@ -8,7 +8,7 @@ public class RandomListNode {
     public int label;
     public RandomListNode next, random;
 
-    RandomListNode(int x) {
+    public RandomListNode(int x) {
         this.label = x;
     }
 }

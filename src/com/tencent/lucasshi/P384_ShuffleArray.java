@@ -11,11 +11,11 @@ public class P384_ShuffleArray {
     }
 
     public int[] reset() {
-
+        return nums;
     }
 
     public int[] shuffle() {
-
+        return nums;
     }
 
 }
