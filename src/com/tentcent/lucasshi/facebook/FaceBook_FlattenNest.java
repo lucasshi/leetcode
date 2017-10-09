@@ -22,7 +22,6 @@ public class FaceBook_FlattenNest {
             // 获取第一个
             p = stack.pop();
         }
-        stack.push(p);
     }
 
     public boolean hasNext() {
@@ -30,14 +29,12 @@ public class FaceBook_FlattenNest {
             return false;
         }
 
-        if (p.isInteger()) {
-            p = stack.pop();
-            while (!p.isInteger()) {
-                for (int i = p.getList().size() - 1; i >= 0; i--) {
-                    stack.push(p.getList().get(i));
-                }
-                p = stack.pop();
+        p = stack.pop();
+        while (!p.isInteger()) {
+            for (int i = p.getList().size() - 1; i >= 0; i--) {
+                stack.push(p.getList().get(i));
             }
+            p = stack.pop();
         }
         return true;
     }
