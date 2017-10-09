@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by fzy on 17/10/3.
  */
-public class FaceBook_workBreak {
+public class FaceBook_wordBreak {
     public boolean wordBreak(String s, List<String> wordDict) {
         HashSet<String> hashDict = new HashSet<>();
         boolean[] dp = new boolean[s.length()];
@@ -15,12 +15,10 @@ public class FaceBook_workBreak {
 
         hashDict.addAll(wordDict);
         for (int i = s.length() - 1; i >= 0; i--) {
-            if (positions.size() == 0) {
-                if (hashDict.contains(s.substring(i))) {
-                    dp[i] = true;
-                    positions.add(i);
-                    continue;
-                }
+            if (hashDict.contains(s.substring(i))) {
+                dp[i] = true;
+                positions.add(i);
+                continue;
             }
 
             // not zero
@@ -35,14 +33,14 @@ public class FaceBook_workBreak {
             }
         }
 
-        for (int i = 0; i < dp.length;i++) {
+        for (int i = 0; i < dp.length; i++) {
             System.out.println(dp[i]);
         }
         return dp[0];
     }
 
     public static void main(String[] args) {
-        FaceBook_workBreak p = new FaceBook_workBreak();
+        FaceBook_wordBreak p = new FaceBook_wordBreak();
         ArrayList<String> dict = new ArrayList<>();
         dict.add("leet");
         dict.add("code");

@@ -30,6 +30,19 @@ public class Facebook_MoveZero {
         }
     }
 
+    public void MoveZeroV2(int[] nums) {
+        int startIndex = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[startIndex] = nums[i];
+                startIndex++;
+            }
+        }
+
+        for (int i = startIndex; i < nums.length; i++)
+            nums[i] = 0;
+    }
+
     public static void main(String[] args) {
         Facebook_MoveZero p = new Facebook_MoveZero();
         int[] nums = {0, 1, 0, 3, 12};
