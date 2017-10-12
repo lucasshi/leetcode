@@ -59,7 +59,7 @@ public class FaceBook_P76 {
 
     public static void main(String[] args) {
         FaceBook_P76 p = new FaceBook_P76();
-        String val = p.minWindow("ADOBECODEBANC", "ABC");
+        String val = p.minWindow("ADOBECBAODEBANC", "ABC");
         System.out.println(val);
     }
 

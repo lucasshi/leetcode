@@ -66,6 +66,6 @@ public class FaceBook_MinsizeSubArray {
         FaceBook_MinsizeSubArray p = new FaceBook_MinsizeSubArray();
         int[] a = {2, 3, 1, 2, 4, 3};
         //p.minSubArrayLen(7, a);
-        p.maxLength(7, a);
+        p.maxLength(1, a);
     }
 }

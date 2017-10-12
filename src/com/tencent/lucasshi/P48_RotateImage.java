@@ -68,7 +68,7 @@ public class P48_RotateImage {
 
         p.printMatrix(matrix2);
         System.out.println("start");
-        //p.rotate(matrix);
+        //p.FaceBook_RotateMin(matrix);
         p.rotate(matrix2);
 
     }
