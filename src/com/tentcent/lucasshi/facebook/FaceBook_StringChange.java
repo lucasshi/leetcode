@@ -30,7 +30,5 @@ public class FaceBook_StringChange {
     public static void main(String[] args) {
         FaceBook_StringChange p = new FaceBook_StringChange();
         System.out.println(p.permuteString("abc"));
-
     }
-
 }

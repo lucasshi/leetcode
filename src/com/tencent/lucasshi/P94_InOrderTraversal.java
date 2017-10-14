@@ -59,8 +59,8 @@ P94_InOrderTraversal {
         stack.push(root);
 
         while (!stack.empty()) {
-            p = p.left;
-            if (p != null) {
+            if (p.left != null) {
+                p = p.left;
                 stack.push(p);
                 continue;
             }
@@ -89,6 +89,7 @@ P94_InOrderTraversal {
             if (p.left != null) {
                 p = p.left;
                 stack.push(p);
+                continue;
             }
 
             while (!stack.empty()) {

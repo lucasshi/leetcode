@@ -8,67 +8,67 @@ import java.util.HashMap;
  * Created by fzy on 17/10/12.
  */
 public class FaceBook_LRUCache {
-    class DoubleListNode {
-        public DoubleListNode prev;
-        public DoubleListNode next;
-        public int val;
+  class DoubleListNode {
+    public DoubleListNode prev;
+    public DoubleListNode next;
+    public int val;
 
-        public DoubleListNode(int val) {
-            this.val = val;
-        }
+    public DoubleListNode(int val) {
+      this.val = val;
+    }
+  }
+
+  class LRUCache {
+    private HashMap<Integer, DoubleListNode> hashMap;
+    private DoubleListNode head;
+
+    public LRUCache() {
+      hashMap = new HashMap<>();
+      head = null;
     }
 
-    class LRUCache {
-        private HashMap<Integer, DoubleListNode> hashMap;
-        private DoubleListNode head;
+    public void put(int key, int value) {
+      if (!hashMap.containsKey(key)) {
+        DoubleListNode node = new DoubleListNode(value);
+        hashMap.put(key, node);
 
-        public LRUCache() {
-            hashMap = new HashMap<>();
-            head = null;
+        if (head == null) {
+          head = node;
         }
 
-        public void put(int key, int value) {
-            if (!hashMap.containsKey(key)) {
-                DoubleListNode node = new DoubleListNode(value);
-                hashMap.put(key, node);
+        node.next = head;
+        head.prev = node;
+        head = node;
+        return;
+      }
 
-                if (head == null) {
-                    head = node;
-                }
+      DoubleListNode node = hashMap.get(key);
+      node.val = value;
 
-                node.next = head;
-                head.prev = node;
-                head = node;
-                return;
-            }
-
-            DoubleListNode node = hashMap.get(key);
-            node.val = value;
-
-            if (node != head) {
-                node.prev.next = node.next;
-                node.next = head;
-                head.prev = node;
-                head = node;
-            }
-        }
-
-        public int get(int key) {
-            if (!hashMap.containsKey(key))
-                return -1;
-
-            DoubleListNode node = hashMap.get(key);
-
-            if (node != head) {
-                node.prev.next = node.next;
-                node.next = head;
-                head.prev = node;
-                head = node;
-            }
-
-            return node.val;
-        }
-
-
+      if (node != head) {
+        node.prev.next = node.next;
+        node.next = head;
+        head.prev = node;
+        head = node;
+      }
     }
+
+    public int get(int key) {
+      if (!hashMap.containsKey(key))
+        return -1;
+
+      DoubleListNode node = hashMap.get(key);
+
+      if (node != head) {
+        node.prev.next = node.next;
+        node.next = head;
+        head.prev = node;
+        head = node;
+      }
+
+      return node.val;
+    }
+
+
+  }
 }
