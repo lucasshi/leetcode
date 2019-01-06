@@ -16,6 +16,7 @@ public class Airbnb_DiplayPages {
         int pageCount = 0;
         boolean needDedup = true;
 
+        
         // do iteration
         while (iter.hasNext()) {
             String line = iter.next();
@@ -28,8 +29,6 @@ public class Airbnb_DiplayPages {
 
                 iter.remove();
                 pageCount++;
-            } else {
-
             }
 
             if (pageCount == num) {

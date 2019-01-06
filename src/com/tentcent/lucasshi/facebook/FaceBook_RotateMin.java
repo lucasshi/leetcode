@@ -10,7 +10,6 @@ public class FaceBook_RotateMin {
 
         while (left < right) {
             int mid = nums[(right + left) / 2];
-            int start = nums[left];
             int end = nums[right];
 
             if (mid < end) {
