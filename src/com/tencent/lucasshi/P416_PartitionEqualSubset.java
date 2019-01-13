@@ -3,7 +3,7 @@ package com.tencent.lucasshi;
 /**
  * Created by fzy on 17/7/30.
  */
-public class P406_PartitionEqualSubset {
+public class P416_PartitionEqualSubset {
     public boolean canPartition(int[] nums) {
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -34,6 +34,6 @@ public class P406_PartitionEqualSubset {
             }
         }
 
-        return true;
+        return false;
     }
 }
