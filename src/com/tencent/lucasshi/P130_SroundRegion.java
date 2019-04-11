@@ -80,4 +80,27 @@ public class P130_SroundRegion {
         }
         return;
     }
+
+    public void solve1(char[][] board) {
+
+    }
+
+    public boolean dfs(char[][] board, boolean[][] visited, int x, int y) {
+        if (visited[x][y])
+            return true;
+        visited[x][y] = true;
+        int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        for (int i = 0; i < dirs.length; i++) {
+            int dx = x + dirs[i][0];
+            int dy = x + dirs[i][1];
+
+            if (dx < 0 || dy < 0 || dx >= board.length || dy >= board[0].length)
+                continue;
+            if (board[dx][dy] == '$')
+                return false;
+            if (!dfs(board, visited, dx, dy))
+                return false;
+        }
+        return true;
+    }
 }

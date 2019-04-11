@@ -6,6 +6,41 @@ import java.util.HashMap;
  * Created by fzy on 17/5/4.
  */
 public class P138_CopyRandomList {
+    public RandomListNode copyRandomListV2(RandomListNode head) {
+        if (head == null)
+            return null;
+        RandomListNode newHead = new RandomListNode(head.label);
+        HashMap<RandomListNode, RandomListNode> visited = new HashMap<>();
+        visited.put(head, newHead);
+        helper(head, newHead, visited);
+        return newHead;
+    }
+
+    public void helper(RandomListNode from, RandomListNode to,
+            HashMap<RandomListNode, RandomListNode> visited) {
+        if (from == null)
+            return;
+
+        RandomListNode next = from.next;
+        RandomListNode randomNode = from.random;
+
+        if (visited.containsKey(next)) {
+            to.next = visited.get(next);
+        } else if (next != null) {
+            to.next = new RandomListNode(next.label);
+            visited.put(from.next, to.next);
+        }
+
+        if (visited.containsKey(randomNode)) {
+            to.random = visited.get(randomNode);
+        } else if (randomNode != null) {
+            to.random = new RandomListNode(randomNode.label);
+            visited.put(from.random, to.random);
+        }
+
+        return;
+    }
+
     public RandomListNode copyRandomList(RandomListNode head) {
         if (head == null)
             return null;

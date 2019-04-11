@@ -76,4 +76,20 @@ public class P101_SymmetricTree {
         n.add(null);
         System.out.println(n.size());
     }
+
+    public boolean isSymmetric1(TreeNode root) {
+        if (root == null)
+            return true;
+        return helper(root.left, root.right);
+    }
+
+    public boolean helper(TreeNode root1, TreeNode root2) {
+        if (root1 != null && root2 != null) {
+            if (root1.val != root2.val)
+                return false;
+            return helper(root1.left, root2.right) && helper(root1.right, root2.left);
+        }
+
+        return root1 == null && root2 == null;
+    }
 }

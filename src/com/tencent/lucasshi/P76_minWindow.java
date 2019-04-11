@@ -1,11 +1,55 @@
 package com.tencent.lucasshi;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by fzy on 17/3/28.
  */
 public class P76_minWindow {
+    // check
+    public static boolean isOk(HashMap<Character, Integer> cnt, HashMap<Character, Integer> t) {
+        for (Character tKey : t.keySet()) {
+            if (!cnt.containsKey(tKey) || cnt.get(tKey) < t.get(tKey))
+                return false;
+        }
+        return true;
+    }
+
+    public static String minWindow2(String s, String t) {
+        int startIndex = 0;
+        int endIndex = 0;
+        // do
+        HashMap<Character, Integer> cntMap = new HashMap<>();
+        HashMap<Character, Integer> tMap = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            if (!tMap.containsKey(t.charAt(i)))
+                tMap.put(t.charAt(i), 0);
+            tMap.put(t.charAt(i), tMap.get(t.charAt(i)) + 1);
+        }
+
+        String result = s;
+        while (endIndex <= s.length()) {
+            if (!isOk(cntMap, tMap)) {
+                if (endIndex == s.length())
+                    break;
+                if (!cntMap.containsKey(s.charAt(endIndex)))
+                    cntMap.put(s.charAt(endIndex), 0);
+                cntMap.put(s.charAt(endIndex), cntMap.get(s.charAt(endIndex)) + 1);
+                endIndex += 1;
+            } else {
+                System.out.println(s.substring(startIndex, endIndex));
+                if (endIndex - startIndex < result.length()) {
+                    result = s.substring(startIndex, endIndex);
+                }
+                cntMap.put(s.charAt(startIndex), cntMap.get(s.charAt(startIndex)) - 1);
+                startIndex += 1;
+            }
+        }
+
+        return result;
+    }
+
     public static String minWindow(String s, String t) {
         HashMap<Character, Integer> tMap = new HashMap<>();
         for (int i = 0; i < t.length(); i++) {
@@ -72,12 +116,12 @@ public class P76_minWindow {
         }
 
         if (minBeginIndex == -1) {
-            return  "";
+            return "";
         }
         return s.substring(minBeginIndex, minEndIndex + 1);
     }
 
     public static void main(String[] args) {
-        P76_minWindow.minWindow("ab", "a");
+        System.out.println(P76_minWindow.minWindow2("ADOBECODEBANC", "ABC"));
     }
 }

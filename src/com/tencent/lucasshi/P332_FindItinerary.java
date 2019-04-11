@@ -46,7 +46,6 @@ public class P332_FindItinerary {
             path.add(dests.get(i));
             usedRoutes.add(routes);
             if (helper(allTickets, path, dests.get(i), usedRoutes, size)) {
-                System.out.println(path);
                 return true;
             }
             // dfs all
