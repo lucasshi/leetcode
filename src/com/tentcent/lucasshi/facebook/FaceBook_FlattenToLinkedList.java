@@ -1,6 +1,5 @@
 package com.tentcent.lucasshi.facebook;
 
-import com.apple.eawt.AppEvent;
 import com.tencent.lucasshi.TreeNode;
 
 /**

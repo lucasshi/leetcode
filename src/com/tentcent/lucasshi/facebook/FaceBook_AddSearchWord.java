@@ -1,8 +1,6 @@
 package com.tentcent.lucasshi.facebook;
 
 
-import sun.text.normalizer.Trie;
-
 import java.util.*;
 
 /**

@@ -8,10 +8,17 @@ import java.util.Random;
 
 public class P384_ShuffleArray {
     private int[] nums;
+    private int[] shuffledNums;
+
     private Random random = new Random();
 
     public P384_ShuffleArray(int[] nums) {
         this.nums = nums;
+        this.shuffledNums = new int[nums.length];
+
+        for (int i = 0; i < shuffledNums.length; i++)
+            shuffledNums[i] = nums[i];
+
         this.random = random;
     }
 
@@ -20,18 +27,14 @@ public class P384_ShuffleArray {
     }
 
     public int[] shuffle() {
-        int[] randNums = new int[nums.length];
-        for (int i = 0; i < nums.length; i++)
-            randNums[i] = nums[i];
         // rand
         for (int i = 0; i < nums.length; i++) {
             int index = random.nextInt(nums.length - i);
-            int temp = randNums[index];
-            randNums[index] = randNums[nums.length - 1 - i];
-            randNums[nums.length - 1 - i] = temp;
+            int temp = shuffledNums[index];
+            shuffledNums[index] = shuffledNums[nums.length - 1 - i];
+            shuffledNums[nums.length - 1 - i] = temp;
         }
 
-        return randNums;
+        return shuffledNums;
     }
-
 }

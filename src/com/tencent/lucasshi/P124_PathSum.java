@@ -7,33 +7,30 @@ import java.util.Map;
  */
 public class P124_PathSum {
     public static int treeMaxPath = Integer.MIN_VALUE;
-    public int maxPathSum(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
 
+    public int maxPathSum(TreeNode root) {
         maxPathSumWithNode(root);
         return treeMaxPath;
     }
 
     public int maxPathSumWithNode(TreeNode root) {
-        if (root == null) {
+        if (root == null)
             return 0;
-        }
 
-        int curVal = root.val;
-        int leftSum = maxPathSumWithNode(root.left);
-        int rightSum = maxPathSumWithNode(root.right);
+        int leftPathMax = maxPathSumWithNode(root.left);
+        int rightPathMax = maxPathSumWithNode(root.right);
 
-        // 这个只记录了单跳
-        int singlePathMax = root.val;
-        singlePathMax = Math.max(leftSum + curVal, singlePathMax);
-        singlePathMax = Math.max(rightSum + curVal, singlePathMax);
+        int maxPath = root.val;
+        maxPath += leftPathMax >= 0? leftPathMax : 0;
+        maxPath += rightPathMax >= 0? rightPathMax : 0;
+        treeMaxPath = Math.max(maxPath, treeMaxPath);
 
-        int doublePathMax = leftSum + rightSum + root.val;
-        treeMaxPath = Math.max(treeMaxPath, singlePathMax);
-        treeMaxPath = Math.max(treeMaxPath, doublePathMax);
+        return Math.max(root.val, Math.max(leftPathMax + root.val, rightPathMax + root.val));
+    }
 
-        return singlePathMax;
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(0);
+        P124_PathSum p124_pathSum = new P124_PathSum();
+        System.out.println(p124_pathSum.maxPathSum(root));
     }
 }

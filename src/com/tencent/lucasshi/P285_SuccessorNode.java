@@ -1,55 +1,52 @@
 package com.tencent.lucasshi;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fzy on 17/9/17.
  */
 public class P285_SuccessorNode {
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        TreeNode cursor;
-
-        // check cursor
         if (p.right != null) {
-            cursor = p.right;
+            TreeNode cursor = p.right;
             while (cursor.left != null) {
                 cursor = cursor.left;
             }
-
             return cursor;
         }
 
-        Stack<TreeNode> nodeStack = new Stack<>();
-        cursor = root;
-        while (cursor != p) {
-            nodeStack.push(cursor);
-            if (cursor.val > p.val) {
-                cursor = cursor.left;
-            } else {
-                cursor = cursor.right;
+        List<TreeNode> paths = getPath(root, p);
+        for (int i = 1; i < paths.size(); i++) {
+            if (paths.get(i).left == paths.get(i - 1)) {
+                return paths.get(i);
             }
         }
 
-        System.out.println(nodeStack.size());
-        // do iter
-        cursor = null;
-        TreeNode target = p;
-        while (!nodeStack.empty()) {
-            cursor = nodeStack.pop();
-            if (cursor.left == target || cursor == root)
-                break;
-            target = cursor;
-        }
+        return null;
+    }
 
-        System.out.println(cursor.val);
-        System.out.println(target.val);
-
-        // find cursor 说明没用了
-        if (cursor == root && cursor.right == target) {
+    public List<TreeNode> getPath(TreeNode root, TreeNode p) {
+        if (root == p) {
+            List<TreeNode> nodeList = new ArrayList<>();
+            nodeList.add(p);
+            return nodeList;
+        } else if (root == null) {
             return null;
         }
 
-        return cursor;
+        List<TreeNode> leftPath = getPath(root.left, p);
+        if (leftPath != null) {
+            leftPath.add(root);
+            return leftPath;
+        }
+
+        List<TreeNode> rightPath = getPath(root.right, p);
+        if (rightPath != null) {
+            rightPath.add(root);
+            return rightPath;
+        }
+        return null;
     }
 
     public static void main(String[] args) {

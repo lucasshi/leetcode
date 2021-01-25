@@ -1,8 +1,5 @@
 package com.tentcent.lucasshi.facebook;
 
-import com.sun.glass.ui.SystemClipboard;
-import com.sun.jdi.connect.Connector;
-import com.sun.source.tree.Tree;
 import com.tencent.lucasshi.TreeNode;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package com.tentcent.lucasshi.facebook;
 
-import sun.text.normalizer.Trie;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
