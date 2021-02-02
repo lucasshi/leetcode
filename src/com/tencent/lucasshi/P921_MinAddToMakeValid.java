@@ -4,22 +4,22 @@ import java.util.Stack;
 
 public class P921_MinAddToMakeValid {
     public int minAddToMakeValid(String S) {
-        Stack<Character> stack = new Stack<>();
         int rightCount = 0;
+        int matchCount = 0;
         for (int i = 0; i < S.length(); i++) {
             char c = S.charAt(i);
             if (c == '(') {
-                stack.push(c);
+                matchCount += 1;
             } else if (c == ')') {
-                if (stack.size() != 0) {
-                    stack.pop();
+                if (matchCount > 0) {
+                    matchCount--;
                 } else {
                     rightCount += 1;
                 }
             }
         }
 
-        return rightCount + stack.size();
+        return rightCount + matchCount;
     }
 
     public static void main(String[] args) {

@@ -5,29 +5,34 @@ package com.tencent.lucasshi;
  */
 public class P29_Divide {
     public int divide(int dividend, int divisor) {
-        int prefix = 1;
-        if (dividend < 0 && divisor > 0) {
-            prefix = -1;
-        } else if (dividend > 0 && divisor < 0) {
-            prefix = -1;
-        }
-
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
-        int result = 0;
-        while (dividend >= divisor) {
-            int sDivisor = divisor;
-            int index = 1;
-            while (sDivisor <= dividend) {
-                result = index;
-                index = index << 1;
-                sDivisor = sDivisor << 1;
-            }
+        if (dividend * divisor <  0)
+            return helper(dividend, divisor) * -1;
+        else
+            return helper(dividend, divisor);
+    }
 
-            dividend = dividend - (sDivisor >> 1);
-            result = result + (index >> 1);
+    public int helper(int dividend, int divisor) {
+        if (dividend < divisor)
+            return 0;
+
+        int d = divisor;
+        int result = 1;
+        int risidual = 0;
+
+        while (d < dividend) {
+            risidual = dividend - d;
+            d = d * 2;
+            result = result * 2;
         }
 
-        return result * prefix;
+        result /= 2;
+        return result + divide(risidual, divisor);
+    }
+
+    public static void main(String[] args) {
+        P29_Divide p29_divide = new P29_Divide();
+        System.out.println(p29_divide.divide(10, 3));
     }
 }
