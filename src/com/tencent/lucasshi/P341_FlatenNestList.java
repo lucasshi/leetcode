@@ -9,40 +9,29 @@ import java.util.Stack;
  * Created by fzy on 17/9/16.
  */
 class NestedIterator implements Iterator<Integer> {
-    private ArrayList<Integer> intList = new ArrayList<>();
-    private int index = 0;
-
-    public List<Integer> parseInteger(NestedInteger ni) {
-        ArrayList<Integer> result = new ArrayList<>();
-        if (ni.isInteger()) {
-            result.add(ni.getInteger());
-            return result;
-        }
-
-        for (int i = 0; i < ni.getList().size(); i++) {
-            List<Integer> subResult =
-                    parseInteger(ni.getList().get(i));
-            result.addAll(subResult);
-        }
-
-        return result;
-    }
+    private Stack<NestedInteger> stack;
 
     public NestedIterator(List<NestedInteger> nestedList) {
-        for (int i = 0; i < nestedList.size(); i++) {
-            intList.addAll(parseInteger(nestedList.get(i)));
-        }
+        stack = new Stack<>();
+        for (int i = nestedList.size() - 1; i >= 0; i--)
+            stack.push(nestedList.get(i));
     }
 
     @Override
     public Integer next() {
 
-        return intList.get(index++);
+        return stack.pop().getInteger();
     }
 
     @Override
     public boolean hasNext() {
-        return index < intList.size();
+        while (!stack.empty() && stack.peek().isInteger() == false) {
+            NestedInteger top = stack.pop();
+            for (int i = top.getList().size() - 1; i >= 0; i--)
+                stack.push(top.getList().get(i));
+        }
+
+        return !stack.empty();
     }
 }
 

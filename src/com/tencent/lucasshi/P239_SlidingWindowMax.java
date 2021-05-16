@@ -22,7 +22,6 @@ public class P239_SlidingWindowMax {
             }
             deque.addLast(i);
 
-            // 这个时候需要输出了
             if (i >= k - 1) {
                 result.add(nums[deque.peekFirst()]);
             }
@@ -31,7 +30,6 @@ public class P239_SlidingWindowMax {
         int[] resultArray = new int[result.size()];
         for (int i = 0; i < result.size(); i++) {
             resultArray[i] = result.get(i);
-            System.out.print(result.get(i) + " ");
         }
 
         return resultArray;

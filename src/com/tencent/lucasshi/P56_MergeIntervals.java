@@ -1,6 +1,9 @@
 package com.tencent.lucasshi;
 
+import sun.jvm.hotspot.LinuxVtblAccess;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,6 +25,25 @@ public class P56_MergeIntervals {
             end = e;
         }
 
+    }
+
+    public int[][] merge(int[][] intervals) {
+        List<int[]> res = new ArrayList<>();
+
+        Arrays.sort(intervals, (o1, o2) -> o1[0] == o2[0]? 0 : o1[0] - o2[0]);
+
+        int[] merged = Arrays.copyOf(intervals[0], intervals[0].length);
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] <= merged[1]) {
+                merged[1] = Math.max(merged[1], intervals[i][1]);
+            } else {
+                res.add(merged);
+                merged = Arrays.copyOf(intervals[i], intervals[i].length);
+            }
+        }
+
+        res.add(merged);
+        return res.toArray(new int[res.size()][]);
     }
 
     public List<Interval> merge(List<Interval> intervals) {

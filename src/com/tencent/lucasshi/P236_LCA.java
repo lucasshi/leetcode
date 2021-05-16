@@ -11,6 +11,36 @@ public class P236_LCA {
         TreeListNode next;
     }
 
+    private TreeNode lcaResult = null;
+
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        lcaResult = null;
+        helper(root, p, q);
+        return lcaResult;
+    }
+
+    public boolean helper(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null)
+            return false;
+
+        if (lcaResult != null)
+            return true;
+
+        boolean leftResult = helper(root.left, p, q);
+        boolean rightResult = helper(root.right, p, q);
+
+        if (leftResult && rightResult) {
+            lcaResult = root;
+        } else if ((root == p || root == q) && (leftResult == true || rightResult == true)) {
+            lcaResult = root;
+        } else if (root == p || root == q) {
+            return true;
+        } else {
+            return leftResult || rightResult;
+        }
+
+        return true;
+    }
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeListNode pPath = getPath(root, p);

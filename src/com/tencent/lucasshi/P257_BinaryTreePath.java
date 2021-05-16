@@ -13,20 +13,15 @@ public class P257_BinaryTreePath {
         if (root == null) {
             return results;
         }
-        buildPaths(root, "");
+        buildPaths(root, new ArrayList<>());
         return results;
     }
 
-    public void buildPaths(TreeNode root, String path) {
-        if (path.equals("")) {
-            path = "" + root.val;
-        } else {
-            path = path + "->" + root.val;
-        }
+    public void buildPaths(TreeNode root, List<String> path) {
+        path.add(String.valueOf(root.val));
 
         if (root.left == null && root.right == null) {
-            results.add(path);
-            return;
+            results.add(String.join("->", path));
         }
 
         if (root.left != null) {
@@ -36,6 +31,8 @@ public class P257_BinaryTreePath {
         if (root.right != null) {
             buildPaths(root.right, path);
         }
+
+        path.remove(path.size() - 1);
     }
 
 }

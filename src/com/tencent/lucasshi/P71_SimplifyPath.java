@@ -1,41 +1,29 @@
 package com.tencent.lucasshi;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by fzy on 17/4/6.
  */
 public class P71_SimplifyPath {
     public static String simplifyPath(String path) {
-        int index = 0;
         String[] segment = path.split("/");
-        String[] paths = new String[segment.length];
+        Stack<String> stack = new Stack<>();
 
         // segment
         for (int i = 0; i < segment.length; i++) {
-            if (segment[i].equals("")) {
-                continue;
-            } else if (segment[i].equals(".")) {
+            if (segment[i].equals("") || segment[i].equals(".")) {
                 continue;
             } else if (segment[i].equals("..")) {
-                if (index > 0) {
-                    index--;
-                }
+                if (!stack.empty())
+                    stack.pop();
             } else {
-                paths[index] = segment[i];
-                index++;
+                stack.push(segment[i]);
             }
         }
 
-        String resultPath = "/";
-        for (int i = 0; i < index; i++) {
-            if (i == index - 1)
-                resultPath += paths[i];
-            else
-                resultPath += paths[i] + "/";
-        }
-
-        return resultPath;
+        return "/" + String.join("/", stack);
     }
 
     public static void main(String[] args) {

@@ -9,31 +9,49 @@ public class P224_Calculate {
     public int calculate(String s) {
         if (s == null || s.length() == 0) return 0;
 
-        Stack<Integer> stack = new Stack<Integer>();
-        int res = 0;
-        int sign = 1;
+        Stack<Integer> integers = new Stack<>();
+        Stack<Character> operators = new Stack<>();
+
+        String numberString = "";
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (Character.isDigit(c)) {
-                int cur = c - '0';
-                while (i + 1 < s.length() && Character.isDigit(s.charAt(i + 1))) {
-                    cur = 10 * cur + s.charAt(++i) - '0';
+            if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                numberString += s.charAt(i);
+            } else {
+                if (numberString.length() != 0) {
+                    integers.push(Integer.valueOf(numberString));
+                    numberString = "";
                 }
-                res += sign * cur;
-            } else if (c == '-') {
-                sign = -1;
-            } else if (c == '+') {
-                sign = 1;
-            } else if (c == '(') {
-                stack.push(res);
-                res = 0;
-                stack.push(sign);
-                sign = 1;
-            } else if (c == ')') {
-                res = stack.pop() * res + stack.pop();
-                sign = 1;
+
+                if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+                    operators.push(s.charAt(i));
+                } else if (s.charAt(i) == '(') {
+                    operators.push(s.charAt(i));
+                } else if (s.charAt(i) == ')') {
+                    while (operators.peek() != '(') {
+                        int val1 = integers.pop();
+                        int val2 = integers.pop();
+                        char operator = operators.pop();
+                        if (operator == '+')
+                            integers.push(val1 + val2);
+                        else
+                            integers.push(val2 - val1);
+                    }
+
+                    operators.pop();
+                }
             }
         }
-        return res;
+
+        while (!operators.empty()) {
+            int val1 = integers.pop();
+            int val2 = integers.pop();
+            char operator = operators.pop();
+            if (operator == '+')
+                integers.push(val1 + val2);
+            else
+                integers.push(val2 - val1);
+        }
+
+        return integers.pop();
     }
 }

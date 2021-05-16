@@ -9,37 +9,15 @@ import java.util.Stack;
  */
 public class P98_ValidBinaryTree {
     public boolean isValidBST(TreeNode root) {
-        if (root == null) {
+        return helper(root, Long.MAX_VALUE, Long.MIN_VALUE);
+    }
+
+    public boolean helper(TreeNode root, long upperBound, long lowerBound) {
+        if (root == null)
+            return true;
+        if (root.val > upperBound || root.val < lowerBound)
             return false;
-        }
-        List<Integer> inorderList = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-
-        TreeNode p = root;
-        while (!stack.empty()) {
-            // left node
-            while (p.left != null) {
-                stack.push(p.left);
-                p = p.left;
-            }
-
-            p = stack.pop();
-            inorderList.add(p.val);
-
-            if (p.right != null) {
-                stack.push(p.right);
-                p = p.right;
-            }
-        }
-
-        for (int i = 1; i < inorderList.size(); i++) {
-            if (inorderList.get(i - 1) >= inorderList.get(i)) {
-                return false;
-            }
-        }
-
-        return true;
+        return helper(root.left, root.val, lowerBound) && helper(root.right, upperBound, root.val);
     }
 
 }

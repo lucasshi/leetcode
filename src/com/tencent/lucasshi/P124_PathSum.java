@@ -9,28 +9,30 @@ public class P124_PathSum {
     public static int treeMaxPath = Integer.MIN_VALUE;
 
     public int maxPathSum(TreeNode root) {
-        maxPathSumWithNode(root);
+        treeMaxPath = Integer.MIN_VALUE;
+        helper(root);
         return treeMaxPath;
     }
 
-    public int maxPathSumWithNode(TreeNode root) {
-        if (root == null)
+    public int helper(TreeNode node) {
+        if (node == null)
             return 0;
 
-        int leftPathMax = maxPathSumWithNode(root.left);
-        int rightPathMax = maxPathSumWithNode(root.right);
+        int leftSum = helper(node.left) + node.val;
+        int rightSum = helper(node.right) + node.val;
+        int totalSum = leftSum + rightSum - node.val;
 
-        int maxPath = root.val;
-        maxPath += leftPathMax >= 0? leftPathMax : 0;
-        maxPath += rightPathMax >= 0? rightPathMax : 0;
-        treeMaxPath = Math.max(maxPath, treeMaxPath);
-
-        return Math.max(root.val, Math.max(leftPathMax + root.val, rightPathMax + root.val));
+        treeMaxPath = Math.max(
+                treeMaxPath, Math.max(
+                        leftSum, Math.max(node.val, Math.max(rightSum, totalSum))));
+        return Math.max(leftSum, Math.max(node.val, rightSum));
     }
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(0);
-        P124_PathSum p124_pathSum = new P124_PathSum();
-        System.out.println(p124_pathSum.maxPathSum(root));
+        TreeNode root = new TreeNode(2);
+        root.left = new TreeNode(-1);
+        root.right = new TreeNode(-1);
+
     }
+
 }

@@ -3,6 +3,7 @@ package com.tencent.lucasshi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by fzy on 17/4/6.
@@ -10,30 +11,32 @@ import java.util.List;
 public class P46_Permutations {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        MyPermute(nums, 0, nums.length, result);
+        helper(nums, 0, nums.length - 1, result);
         return result;
     }
 
-    public void MyPermute(int[] nums, int startIndex, int endIndex, List<List<Integer>> result) {
-        if (startIndex == endIndex) {
-            List<Integer> permuteList = new ArrayList<>();
-            for (int i = 0; i < nums.length; i++) {
-                permuteList.add(nums[i]);
-            }
-            result.add(permuteList);
+    public void swap(int[] nums, int from, int to) {
+        int temp = nums[from];
+        nums[from] = nums[to];
+        nums[to] = temp;
+    }
+
+    public void helper(int[] nums, int start, int end, List<List<Integer>> result) {
+        if (start == end) {
+            result.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+            return;
         }
 
-        //
-        for (int index = startIndex; index < endIndex; index++) {
-            int tmp = nums[index];
-            nums[index] = nums[startIndex];
-            nums[startIndex] = tmp;
-            // 进行运算
-            MyPermute(nums, startIndex + 1, endIndex, result);
-            // 然后交换回来
-            tmp = nums[index];
-            nums[index] = nums[startIndex];
-            nums[startIndex] = tmp;
+        for (int i = start; i <= end; i++) {
+            swap(nums, start, i);
+            helper(nums, start + 1, end, result);
+            swap(nums, start, i);
         }
     }
+
+    public static void main(String[] args) {
+        P46_Permutations p46_permutations = new P46_Permutations();
+        System.out.println(p46_permutations.permute(new int[]{1, 2, 3}));
+    }
+
 }

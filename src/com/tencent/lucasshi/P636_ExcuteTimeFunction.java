@@ -8,54 +8,41 @@ import java.util.Stack;
  * Created by fzy on 17/9/18.
  */
 public class P636_ExcuteTimeFunction {
-    class FunctionCall {
+    class Function {
         public int functionId;
-        public int timeStamp;
+        public int startTime;
+        public int endTime;
 
-        // 说明是时间长度
-        public int interval = 0;
-
-        public FunctionCall(int functionId, int timeStamp) {
+        Function(final int functionId, final int startTime) {
             this.functionId = functionId;
-            this.timeStamp = timeStamp;
-            this.interval = -1;
+            this.startTime = startTime;
         }
     }
 
     public int[] exclusiveTime(int n, List<String> logs) {
-        Stack<FunctionCall> functionStack = new Stack<>();
-        int[] result = new int[n];
+        Stack<Function> stack = new Stack<>();
+        int[] res = new int[n];
 
         for (int i = 0; i < logs.size(); i++) {
-            String log = logs.get(i);
-            String[] logArray = log.split(":");
-
-            FunctionCall functionCall = new FunctionCall(
-                    Integer.valueOf(logArray[0]), Integer.valueOf(logArray[2]));
-
-            if (logArray[1].equals("start")) {
-                functionStack.push(functionCall);
-                continue;
-            }
-
-            // 肯定是endType了
-            int otherInterval = 0;
-            while (!functionStack.empty()) {
-                FunctionCall stackCall = functionStack.pop();
-                if (stackCall.functionId == functionCall.functionId
-                        && stackCall.interval == -1) {
-                    stackCall.interval = functionCall.timeStamp - stackCall.timeStamp + 1;
-                    result[stackCall.functionId] += stackCall.interval - otherInterval;
-                    functionStack.push(stackCall);
-                    System.out.println(stackCall.interval + " " + otherInterval);
-                    break;
-                } else {
-                    otherInterval += stackCall.interval;
+            String[] eles = logs.get(i).split(":");
+            if (eles[1].equals("start")) {
+                stack.push(new Function(
+                        Integer.valueOf(eles[0]),
+                        Integer.valueOf(eles[2])));
+            } if (eles[1].equals("end")) {
+                int otherFucntionTime = 0;
+                while (stack.peek().functionId != Integer.valueOf(eles[0])) {
+                    Function func = stack.pop();
+                    otherFucntionTime += func.endTime - func.startTime;
                 }
+                Function function = stack.pop();
+                function.endTime = Integer.valueOf(eles[2]);
+                res[function.functionId] += function.endTime - function.startTime - otherFucntionTime;
+                stack.push(function);
             }
         }
 
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {

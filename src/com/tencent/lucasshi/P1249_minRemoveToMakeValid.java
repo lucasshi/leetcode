@@ -1,7 +1,6 @@
 package com.tencent.lucasshi;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 

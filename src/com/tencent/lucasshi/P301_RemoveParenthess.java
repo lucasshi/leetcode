@@ -1,92 +1,86 @@
 package com.tencent.lucasshi;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by fzy on 17/9/19.
  */
 public class P301_RemoveParenthess {
-    private HashSet<String> results = new HashSet<>();
-    private char[] order1 = {'(', ')'};
-    private char[] order2 = {')', '('};
+    public HashSet<String> results = new HashSet<>();
 
-
-    public HashSet<String> removeInvalidParentheses(String s) {
-        HashSet<String> positiveResult = getResult(s, order1);
-        HashSet<String> finalResult = new HashSet<>();
-
-        for (String positive : positiveResult) {
-            StringBuffer tmpBuffer = new StringBuffer(positive);
-            String reverse = tmpBuffer.reverse().toString();
-
-            for (String reverseS : getResult(reverse, order2)) {
-                tmpBuffer = new StringBuffer(reverseS);
-                finalResult.add(tmpBuffer.reverse().toString());
-            }
+    private void dfs(String s, String cur, int index, int lnum, int rnum) {
+        if (index == s.length()) {
+            if (lnum == rnum) results.add(cur);
+            return;
         }
-        System.out.println(positiveResult);
-        System.out.println(finalResult);
-        return finalResult;
+
+        if (rnum > lnum)
+            return;
+
+        // remove
+        if (s.charAt(index) == '(') {
+            dfs(s, cur, index + 1, lnum, rnum);
+        } else if (s.charAt(index) == ')') {
+            dfs(s, cur, index + 1, lnum, rnum);
+        }
+
+        // not removing
+        lnum += s.charAt(index) == '(' ? 1:0;
+        rnum += s.charAt(index) == ')' ? 1:0;
+
+        String newCur = cur + s.charAt(index);
+        dfs(s, newCur, index + 1, lnum, rnum);
     }
 
-
-    public HashSet<String> getResult(String s, char[] order) {
-        int count = 0;
-        HashSet<String> result = new HashSet<>();
-        int lastIndex = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == order[0])
-                count++;
-            if (s.charAt(i) == order[1])
-                count--;
-            if (count >= 0)
-                continue;
-
-            HashSet<String> tmpResult = new HashSet<>();
-            for (int j = lastIndex; j < i; j++) {
-                if (s.charAt(j) == order[1]) {
-                    String tmpS = s.substring(lastIndex, j);
-                    if (j + 1 <= i) {
-                        tmpS += s.substring(j + 1, i + 1);
-                    }
-                    tmpResult.add(tmpS);
-                }
-            }
-            lastIndex = i;
-            count = 0;
-
-            // 开始进行排列组合
-            HashSet<String> newResult = new HashSet<>();
-            if (result.size() == 0) {
-                newResult.addAll(tmpResult);
-            } else {
-                for (String s1 : result) {
-                    for (String s2 : tmpResult) {
-                        newResult.add(s1 + s2);
-                    }
-                }
-            }
-
-            result = newResult;
+    public void dfsV2(String s, String cur, int lnum, int rnum, int index) {
+        if (index == s.length()) {
+            if (lnum == rnum)
+                results.add(cur);
+            return;
         }
 
-        HashSet<String> finalResult = new HashSet<>();
-        if (result.size() == 0) {
-            finalResult.add(s);
+        if (rnum > lnum) {
+            return;
+        }
+
+        if (s.charAt(index) == ')') {
+            dfsV2(s, cur, lnum, rnum, index + 1);
+            dfsV2(s, cur + ')', lnum, rnum + 1, index + 1);
+        } else if (s.charAt(index) == '(') {
+            dfsV2(s, cur, lnum, rnum, index + 1);
+            dfsV2(s, cur + '(', lnum + 1, rnum, index + 1);
         } else {
-            for (String rs : result) {
-                finalResult.add(rs + s.substring(lastIndex + 1));
-                System.out.println(rs + s.substring(lastIndex + 1));
-            }
+            dfsV2(s, cur + s.charAt(index), lnum, rnum, index + 1);
         }
-        return finalResult;
+    }
+
+    public List<String> removeInvalidParentheses(String s) {
+        dfsV2(s, "", 0, 0, 0);
+
+        // List<String> sortedResult = results.stream()
+        //         .sorted(Comparator.comparing(String::length).reversed())
+        //         .collect(Collectors.toList());
+        // List<String> result = new ArrayList<>();
+        // int size = sortedResult.get(0).length();
+        // for (int i = 0; i < sortedResult.size(); i++) {
+        //     if (sortedResult.get(i).length() == size)
+        //         result.add(sortedResult.get(i));
+        //     if (sortedResult.get(i).length() < size)
+        //         break;
+        // }
+        return null;
+        //return results;
     }
 
     public static void main(String[] args) {
-        String a = "abbbb";
-        System.out.println(a.substring(1, a.length()));
         P301_RemoveParenthess p = new P301_RemoveParenthess();
-        p.removeInvalidParentheses("()())()");
+        p.dfsV2("(a)())()", "", 0, 0, 0);
+        System.out.println(p.results);
+        // System.out.println(p.removeInvalidParentheses("(a)())()"));
 
 
     }
