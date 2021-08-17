@@ -17,6 +17,30 @@ public class P1110_delNodes {
         return result;
     }
 
+    public List<TreeNode> delNodesV2(TreeNode root, int[] to_delete) {
+        Set<Integer> toDeletes = Arrays.stream(to_delete)
+                .mapToObj(v -> Integer.valueOf(v))
+                .collect(Collectors.toSet());
+    }
+
+    public List<TreeNode> del(TreeNode father, TreeNode root, Set<Integer> dels) {
+        List<TreeNode> left = del(root, root.left, dels);
+        List<TreeNode> right = del(root, root.right, dels);
+
+        if (dels.contains(root)) {
+            if (father != null && father.left == root)
+                father.left = null;
+            else if (father != null && father.right == root)
+                father.right = null;
+
+            List<TreeNode> result = new ArrayList<>(left);
+            result.addAll(right);
+            return result;
+        } else {
+
+        }
+    }
+
     public void helper(TreeNode father, TreeNode pnode, Set<Integer> toDeletes) {
         if (pnode == null)
             return;

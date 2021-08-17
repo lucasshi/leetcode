@@ -12,6 +12,18 @@ import java.util.LinkedList;
 public class P133_CloneGraph {
     public static HashMap<UndirectedGraphNode, UndirectedGraphNode> isVisitedMap = new HashMap<>();
 
+    public UndirectedGraphNode cloneGraphV1(UndirectedGraphNode node) {
+        if (isVisitedMap.containsKey(node))
+            return isVisitedMap.get(node);
+        UndirectedGraphNode cloneNode = new UndirectedGraphNode(node.label);
+
+        for (UndirectedGraphNode neighborNode: node.neighbors) {
+            cloneNode.neighbors.add(cloneGraphV1(neighborNode));
+        }
+
+        return cloneNode;
+    }
+
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         Queue<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
         Queue<UndirectedGraphNode> cloneQ = new LinkedList<UndirectedGraphNode>();

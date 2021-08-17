@@ -6,6 +6,7 @@ package com.tencent.lucasshi;
 
 public class P105_ConstructBinaryTree {
     public TreeNode buildTreeV2(int[] preorder, int[] inorder) {
+
         return null;
     }
 
@@ -16,15 +17,18 @@ public class P105_ConstructBinaryTree {
         if (ps == pe)
             return new TreeNode(preorder[ps]);
 
+        int mid = inorder[is];
+        int i = ps;
+        for (i = ps; i < pe && preorder[i] != mid; i++) {}
 
-        int mid = is;
-        for (; inorder[mid] != preorder[ps]; mid++) {
-        }
+        int leftSize = i - ps;
+        int rightSize = pe - i;
+        TreeNode left = helper(preorder, inorder, ps , i - 1, is + 1, is + leftSize);
+        TreeNode right = helper(preorder, inorder, i + 1 , pe, ie - rightSize, ie);
 
-        int leftNodeSize = mid - is + 1;
-        TreeNode root = new TreeNode(preorder[ps]);
-        root.left = helper(preorder, inorder, ps + 1, ps + leftNodeSize, is, mid - 1);
-        root.right = helper(preorder, inorder, ps + 1, ps + leftNodeSize, is, mid - 1);
-        return root;
+        TreeNode result = new TreeNode(preorder[ps]);
+        result.left = left;
+        result.right = right;
+        return result;
     }
 }

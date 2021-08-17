@@ -5,7 +5,7 @@ package com.tencent.lucasshi;
  */
 
 public class P24_SwapPairs {
-    class ListNode {
+    static class ListNode {
         int val;
         ListNode next;
 
@@ -39,4 +39,32 @@ public class P24_SwapPairs {
         return head;
     }
 
+    public ListNode swapPairsV2(ListNode head) {
+        if (head == null)
+            return null;
+
+        if (head.next == null)
+            return head;
+
+        ListNode ret = head.next;
+        ListNode retNext = ret.next;
+
+        ret.next = head;
+        head.next = swapPairsV2(retNext);
+
+        return ret;
+    }
+
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+
+        P24_SwapPairs p24_swapPairs = new P24_SwapPairs();
+        ListNode newHead = p24_swapPairs.swapPairsV2(head);
+        System.out.println(newHead);
+
+    }
 }

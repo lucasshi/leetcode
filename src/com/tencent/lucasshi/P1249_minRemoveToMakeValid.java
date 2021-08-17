@@ -7,18 +7,15 @@ import java.util.Stack;
 public class P1249_minRemoveToMakeValid {
     public String minRemoveToMakeValid(String s) {
         Stack<Integer> indexStack = new Stack<>();
-        Stack<Character> characterStack = new Stack<>();
         Set<Integer> removeIndex = new HashSet<>();
 
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '(') {
-                characterStack.push(s.charAt(i));
                 indexStack.push(i);
             } else if (s.charAt(i) == ')') {
-                if (characterStack.empty()) {
+                if (indexStack.empty()) {
                     removeIndex.add(i);
                 } else {
-                    characterStack.pop();
                     indexStack.pop();
                 }
             }

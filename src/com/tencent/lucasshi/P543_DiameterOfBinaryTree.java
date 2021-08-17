@@ -17,7 +17,6 @@ public class P543_DiameterOfBinaryTree {
             diameter = leftDepth + rightDepth + 1;
         }
 
-        System.out.println(root.val + " " + leftDepth + " " +rightDepth);
         return Math.max(leftDepth, rightDepth);
     }
 

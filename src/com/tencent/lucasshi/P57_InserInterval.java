@@ -43,12 +43,7 @@ public class P57_InserInterval {
         }
 
         result.add(newInter);
-        result.sort(new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                return o1.start == o2.start ? 0 : o1.start - o2.start;
-            }
-        });
+        result.sort((o1, o2) -> o1.start == o2.start ? 0 : o1.start - o2.start);
         return result;
     }
 }

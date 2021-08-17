@@ -37,6 +37,44 @@ public class P399_EvaluateDivision {
         return -1;
     }
 
+    public double dfs(HashMap<String, List<Equation>> equationMap, String from, String to, Set<String> visited) {
+        if (from == to)
+            return 1;
+        if (visited.contains(from))
+            return -1;
+
+        List<Equation> equations = equationMap.get(from);
+        for (Equation eq: equations) {
+            visited.add(eq.to);
+            double result = dfs(equationMap, eq.to, to, visited);
+            if (result != -1)
+                return result * eq.value;
+            visited.remove(eq.to);
+        }
+
+        return -1;
+    }
+
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        HashMap<String, List<Equation>> equationMap = new HashMap<>();
+        for (int i = 0; i < equations.size(); i++) {
+            List<String> equation = equations.get(i);
+            String first = equation.get(0);
+            String second = equation.get(1);
+
+            equationMap.putIfAbsent(first, new ArrayList<>());
+            equationMap.putIfAbsent(second, new ArrayList<>());
+            equationMap.get(first).add(new Equation(second, values[i]));
+            equationMap.get(second).add(new Equation(first, 1 / values[i]));
+        }
+
+        List<Double> calcResults = new ArrayList<>();
+        for (List<String> query: queries) {
+            calcResults.add(dfs(equationMap, query.get(0), query.get(1), new HashSet<>()));
+        }
+
+        return calcResults.stream().mapToDouble(i -> i).toArray();
+    }
 
     public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
         HashMap<String, List<Equation>> equationMap = new HashMap<>();
